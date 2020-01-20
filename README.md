@@ -18,7 +18,7 @@ query = '''
         hello
     }
 '''
-result = graphql.execute(query)
+data, errors = graphql.execute(query)
 ```
 
 ### Authentication
@@ -34,7 +34,7 @@ graphql.unset_headers()
 
 Or directly provide them on every execution:
 ```python
-result = graphql.execute(query, headers={'Authorization': 'Bearer xxxxx'})
+data, errors = graphql.execute(query, headers={'Authorization': 'Bearer xxxxx'})
 ```
 
 ## Examples
@@ -54,7 +54,7 @@ query = '''
         }
     }
 '''
-result = graphql.execute(query)
+data, errors = graphql.execute(query)
 ```
 
 ```json
@@ -108,7 +108,7 @@ query = '''
     }
 '''
 variables = {"id": "ZmlsbXM6MQ=="}
-result = graphql.execute(query, variables)
+data, errors = graphql.execute(query, variables)
 ```
 
 ```json

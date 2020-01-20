@@ -24,9 +24,16 @@ class GraphQL:
         if headers is None:
             headers = self.headers
 
-        response = requests.post(self.endpoint, json=payload, headers=headers)
+        response = requests.post(self.endpoint, json=payload, headers=headers).json()
 
         try:
-            return response.json()['data']
+            data = response['data']
         except KeyError:
-            return response.json()['errors']
+            data = None
+
+        try:
+            errors = response['errors']
+        except KeyError:
+            errors = None
+
+        return data, errors

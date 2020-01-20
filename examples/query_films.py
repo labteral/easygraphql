@@ -15,5 +15,5 @@ query = '''
         }
     }
 '''
-result = graphql.execute(query)
-print(json.dumps(result, indent=4))
+data, errors = graphql.execute(query)
+print(json.dumps(data, indent=4))
