@@ -5,35 +5,42 @@ import requests
 
 
 class GraphQL:
-    def __init__(self, endpoint, headers=None):
+    def __init__(self, endpoint: str, headers: dict = None):
         self.endpoint = endpoint
-        self.headers = headers
+        self._headers = {}
+        if headers is not None:
+            self._headers = headers
 
-    def set_headers(self, headers):
-        self.headers = headers
+    @property
+    def headers(self):
+        return dict(self._headers)
+
+    def add_headers(self, headers: dict):
+        self._headers.update(headers)
+
+    def set_headers(self, headers: dict):
+        self._headers = headers
 
     def unset_headers(self):
-        self.headers = None
+        self._headers = {}
 
-    def execute(self, operation, variables=None, headers=None):
-        payload = {'query': operation}
-
-        if variables is not None:
-            payload['variables'] = variables
-
+    def execute(self, operation: str, variables: dict = None, headers: dict = None):
         if headers is None:
-            headers = self.headers
+            headers = self._headers
 
-        response = requests.post(self.endpoint, json=payload, headers=headers).json()
+        request_data = {'query': ' '.join(operation.split())}
+        if variables is not None:
+            request_data['variables'] = variables
 
+        response = requests.post(self.endpoint, json=request_data, headers=headers).json()
         try:
-            data = response['data']
+            response_data = response['data']
         except KeyError:
-            data = None
+            response_data = None
 
         try:
             errors = response['errors']
         except KeyError:
             errors = None
 
-        return data, errors
+        return response_data, errors
