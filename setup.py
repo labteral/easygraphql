@@ -25,4 +25,5 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    install_requires=[''])  # Dependencies
+    install_requires=['requests']
+)
